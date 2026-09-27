@@ -80,7 +80,9 @@ export class MockProductRepository implements ProductRepository {
   }
 
   async getById(id: string): Promise<Product | null> {
+    console.log('[MOCK_REPO] getById called with:', id);
     const found = this.products.find((p) => p.id === id);
+    console.log('[MOCK_REPO] getById result for', id, ':', found ? found.id : 'null');
     return found ? { ...found } : null;
   }
 

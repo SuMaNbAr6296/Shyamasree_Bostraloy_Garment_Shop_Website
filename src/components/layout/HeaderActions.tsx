@@ -6,9 +6,7 @@ import { Search, Heart, ShoppingBag } from 'lucide-react';
 import { IconButton } from '@/components/ui/IconButton';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { MobileNavigation } from './MobileNavigation';
-import { CartDrawer } from '@/components/cart/CartDrawer';
-import { SearchOverlay } from '@/components/search/SearchOverlay';
-import { QuickViewModal } from '@/components/catalog/QuickViewModal';
+
 import { useCartStore } from '@/store/cart-store';
 import { useWishlistStore } from '@/store/wishlist-store';
 import { useCartDrawerStore } from '@/store/cart-drawer-store';
@@ -86,10 +84,7 @@ export function HeaderActions() {
         <MobileNavigation />
       </div>
 
-      {/* Global Modals & Overlays */}
-      <CartDrawer />
-      <SearchOverlay />
-      <QuickViewModal />
+
     </>
   );
 }

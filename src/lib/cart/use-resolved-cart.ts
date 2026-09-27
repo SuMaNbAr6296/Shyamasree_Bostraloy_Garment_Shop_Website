@@ -45,10 +45,13 @@ export function useResolvedCart(): ResolvedCartState {
   const [productsMap, setProductsMap] = useState<Record<string, Product | null>>({});
 
   const missingProductIds = useMemo(() => {
+    console.log('[USE_RESOLVED_CART] Recalculating missingProductIds. isHydrated:', isHydrated, 'storeItems:', storeItems, 'productsMap:', productsMap);
     if (!isHydrated) return [];
-    return storeItems
+    const missing = storeItems
       .map((item) => item.productId)
       .filter((id) => productsMap[id] === undefined);
+    console.log('[USE_RESOLVED_CART] missingProductIds result:', missing);
+    return missing;
   }, [storeItems, productsMap, isHydrated]);
 
   useEffect(() => {
@@ -58,7 +61,9 @@ export function useResolvedCart(): ResolvedCartState {
 
     Promise.all(
       missingProductIds.map(async (id) => {
+        console.log('[USE_RESOLVED_CART] Requesting getById for:', id);
         const product = await productRepository.getById(id);
+        console.log('[USE_RESOLVED_CART] Result from getById for:', id, '->', product ? product.id : 'null');
         return { id, product: product || null };
       })
     )
@@ -70,8 +75,20 @@ export function useResolvedCart(): ResolvedCartState {
           results.forEach(({ id, product }) => {
             nextMap[id] = product;
           });
+          console.log('[USE_RESOLVED_CART] Updated productsMap:', nextMap);
           return nextMap;
         });
+
+        // Auto-remove invalid items from the persistent cart store
+        // if they no longer exist in the database/repository.
+        const invalidIds = results
+          .filter(({ product }) => product === null)
+          .map(({ id }) => id);
+          
+        if (invalidIds.length > 0) {
+          const cartStore = useCartStore.getState();
+          invalidIds.forEach((id) => cartStore.removeItem(id));
+        }
       })
       .catch((err) => {
         console.error('Failed to resolve cart products:', err);
@@ -94,7 +111,9 @@ export function useResolvedCart(): ResolvedCartState {
         quantity: item.quantity,
       }));
 
-    return calculateCartTotals(availableItems);
+    const result = calculateCartTotals(availableItems);
+    console.log('[USE_RESOLVED_CART] Final resolvedItems:', result.resolvedItems);
+    return result;
   }, [storeItems, productsMap, isHydrated]);
 
   const totalItems = useMemo(() => {
@@ -102,6 +121,7 @@ export function useResolvedCart(): ResolvedCartState {
   }, [storeItems]);
 
   const isLoading = !isHydrated || (storeItems.length > 0 && missingProductIds.length > 0);
+  console.log('[USE_RESOLVED_CART] Returning state. isLoading:', isLoading, 'items.length:', resolvedItems.length, 'totalItems:', isHydrated ? totalItems : 0);
 
   return {
     items: resolvedItems,

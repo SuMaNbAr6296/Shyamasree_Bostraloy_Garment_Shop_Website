@@ -26,6 +26,8 @@ export function CartDrawer() {
 
   const { items, subtotal, totalItems, isLoading, isHydrated } = useResolvedCart();
 
+  console.log('[CART_DRAWER] Render. isOpen:', isOpen, 'isHydrated:', isHydrated, 'isLoading:', isLoading, 'items.length:', items.length, 'totalItems:', totalItems);
+
   // Escape key handler
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -56,7 +58,7 @@ export function CartDrawer() {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="font-sans">
+        <motion.div className="font-sans">
           {/* Backdrop Overlay */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -136,7 +138,8 @@ export function CartDrawer() {
                   </Button>
                 </div>
               ) : (
-                items.map(({ product, quantity, lineTotal }) => {
+                <>
+                  {items.map(({ product, quantity, lineTotal }) => {
                   const name = product.name[locale] || product.name.bn;
                   const mainImage = product.images[0];
 
@@ -221,7 +224,8 @@ export function CartDrawer() {
                       </div>
                     </div>
                   );
-                })
+                  })}
+                </>
               )}
             </div>
 
@@ -253,7 +257,7 @@ export function CartDrawer() {
               </div>
             )}
           </motion.div>
-        </div>
+        </motion.div>
       )}
     </AnimatePresence>
   );

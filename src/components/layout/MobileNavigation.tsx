@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Link, usePathname } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'motion/react';
@@ -11,9 +12,14 @@ import { cn } from '@/lib/utils';
 
 export function MobileNavigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const t = useTranslations('navigation');
   const tCommon = useTranslations('common');
   const pathname = usePathname();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Close menu on Escape key press
   useEffect(() => {
@@ -55,7 +61,8 @@ export function MobileNavigation() {
         {isOpen ? <X className="w-5 h-5 text-foreground" /> : <Menu className="w-5 h-5 text-foreground" />}
       </IconButton>
 
-      <AnimatePresence>
+      {mounted && typeof document !== 'undefined' ? createPortal(
+        <AnimatePresence>
         {isOpen && (
           <>
             {/* Backdrop */}
@@ -145,7 +152,9 @@ export function MobileNavigation() {
             </motion.div>
           </>
         )}
-      </AnimatePresence>
+      </AnimatePresence>,
+      document.body
+      ) : null}
     </div>
   );
 }

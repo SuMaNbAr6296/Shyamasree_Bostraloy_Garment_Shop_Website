@@ -27,6 +27,7 @@ export const useCartStore = create<CartState>()(
       _hasHydrated: false,
 
       addItem: (productId: string, quantity = 1) => {
+        console.log('[CART_STORE] addItem called:', { productId, quantity });
         if (!productId || quantity < 1) return;
 
         set((state) => {
@@ -92,6 +93,7 @@ export const useCartStore = create<CartState>()(
       },
 
       setHasHydrated: (state: boolean) => {
+        console.log('[CART_STORE] setHasHydrated called:', state);
         set({ _hasHydrated: state });
       },
     }),

@@ -2,6 +2,9 @@ import React from 'react';
 import { AnnouncementBar } from './AnnouncementBar';
 import { Header } from './Header';
 import { Footer } from './Footer';
+import { CartDrawer } from '@/components/cart/CartDrawer';
+import { SearchOverlay } from '@/components/search/SearchOverlay';
+import { QuickViewModal } from '@/components/catalog/QuickViewModal';
 
 interface StorefrontShellProps {
   children: React.ReactNode;
@@ -14,6 +17,10 @@ export function StorefrontShell({ children }: StorefrontShellProps) {
       <Header />
       <div className="flex-1 w-full">{children}</div>
       <Footer />
+      {/* Global Modals & Overlays */}
+      <CartDrawer />
+      <SearchOverlay />
+      <QuickViewModal />
     </div>
   );
 }
