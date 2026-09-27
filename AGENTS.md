@@ -1,0 +1,26 @@
+# Shyamasree Bostraloy Engineering Rules
+
+- Never translate Bengali mechanically.
+- Bengali and English must be natural localized content.
+- Bengali is the default locale.
+- Use /bn and /en routing.
+- Preserve route when switching locale.
+- Server Components by default.
+- Client Components only for real interactivity.
+- Do not put catalog data in Zustand.
+- Do not hardcode product data inside UI components.
+- Use repository/service abstractions.
+- Mock data now, backend later.
+- Never invent business information.
+- Never invent social links.
+- Never invent contact information.
+- Use existing brand assets when available.
+- Do not replace existing brand identity with generic ecommerce UI.
+- Motion for UI transitions.
+- GSAP for complex timelines.
+- Three.js only when justified.
+- Respect prefers-reduced-motion.
+- Optimize images and fonts.
+- Maintain accessibility.
+- Validate every major change with typecheck, lint and build.
+- Work in small, reviewable phases.
