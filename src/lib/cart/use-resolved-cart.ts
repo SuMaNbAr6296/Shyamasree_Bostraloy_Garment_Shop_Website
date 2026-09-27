@@ -42,13 +42,13 @@ export function useResolvedCart(): ResolvedCartState {
   const storeHasHydrated = useCartStore((state) => state._hasHydrated);
   const isHydrated = useStoreHydration(storeHasHydrated);
 
-  const [productsMap, setProductsMap] = useState<Record<string, Product>>({});
+  const [productsMap, setProductsMap] = useState<Record<string, Product | null>>({});
 
   const missingProductIds = useMemo(() => {
     if (!isHydrated) return [];
     return storeItems
       .map((item) => item.productId)
-      .filter((id) => !productsMap[id]);
+      .filter((id) => productsMap[id] === undefined);
   }, [storeItems, productsMap, isHydrated]);
 
   useEffect(() => {
@@ -56,20 +56,21 @@ export function useResolvedCart(): ResolvedCartState {
 
     let isMounted = true;
 
-    Promise.all(missingProductIds.map((id) => productRepository.getById(id)))
+    Promise.all(
+      missingProductIds.map(async (id) => {
+        const product = await productRepository.getById(id);
+        return { id, product: product || null };
+      })
+    )
       .then((results) => {
         if (!isMounted) return;
 
         setProductsMap((prevMap) => {
           const nextMap = { ...prevMap };
-          let changed = false;
-          results.forEach((product) => {
-            if (product && !nextMap[product.id]) {
-              nextMap[product.id] = product;
-              changed = true;
-            }
+          results.forEach(({ id, product }) => {
+            nextMap[id] = product;
           });
-          return changed ? nextMap : prevMap;
+          return nextMap;
         });
       })
       .catch((err) => {
@@ -89,7 +90,7 @@ export function useResolvedCart(): ResolvedCartState {
     const availableItems = storeItems
       .filter((item) => Boolean(productsMap[item.productId]))
       .map((item) => ({
-        product: productsMap[item.productId],
+        product: productsMap[item.productId] as Product,
         quantity: item.quantity,
       }));
 

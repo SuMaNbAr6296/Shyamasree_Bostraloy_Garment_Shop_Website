@@ -28,14 +28,19 @@ export function QuickViewModal() {
   const addItem = useCartStore((state) => state.addItem);
   const openCartDrawer = useCartDrawerStore((state) => state.openDrawer);
 
+  const handleClose = useCallback(() => {
+    setQuantity(1);
+    closeQuickView();
+  }, [closeQuickView]);
+
   // Escape key handler
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
-        closeQuickView();
+        handleClose();
       }
     },
-    [isOpen, closeQuickView]
+    [isOpen, handleClose]
   );
 
   useEffect(() => {
@@ -69,55 +74,55 @@ export function QuickViewModal() {
     if (!canPurchase) return;
 
     addItem(product.id, quantity);
-    closeQuickView();
+    handleClose();
     openCartDrawer();
   };
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <div key={product.id} className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 font-sans">
+        <div key={product.id} className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 font-sans">
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            onClick={closeQuickView}
+            onClick={handleClose}
             className="fixed inset-0 bg-black/70 backdrop-blur-xs"
             aria-hidden="true"
           />
 
-          {/* Modal Container */}
+          {/* Viewport-constrained Modal Shell */}
           <motion.div
             role="dialog"
             aria-modal="true"
             aria-label={`${t('title')} — ${name}`}
-            initial={{ opacity: 0, scale: 0.95, y: 15 }}
+            initial={{ opacity: 0, scale: 0.96, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 15 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="relative w-full max-w-3xl bg-card rounded-md border border-border shadow-2xl overflow-hidden z-10 flex flex-col md:flex-row max-h-[90vh] md:max-h-[85vh]"
+            exit={{ opacity: 0, scale: 0.96, y: 10 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="relative w-full max-w-4xl h-auto md:h-[520px] max-h-[calc(100dvh-2rem)] md:max-h-[calc(100dvh-3rem)] min-h-0 bg-card rounded-xl border border-border shadow-2xl overflow-hidden z-10 flex flex-col md:flex-row"
           >
-            {/* Close Button */}
+            {/* Floating Close Button */}
             <button
               type="button"
-              onClick={closeQuickView}
-              className="absolute top-3 right-3 z-20 p-2 rounded-full bg-card/80 text-foreground hover:bg-muted transition-colors border border-border/50 shadow-2xs cursor-pointer"
-              aria-label={tProduct('productNotFound') ? 'বন্ধ করুন' : 'Close'}
+              onClick={handleClose}
+              className="absolute top-3 right-3 z-30 p-2 rounded-full bg-card/90 text-foreground hover:bg-muted transition-colors border border-border/60 shadow-xs cursor-pointer"
+              aria-label={locale === 'bn' ? 'বন্ধ করুন' : 'Close modal'}
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
 
             {/* Left Column: Product Image */}
-            <div className="relative w-full md:w-1/2 aspect-4/3 md:aspect-square bg-muted/20 shrink-0 border-b md:border-b-0 md:border-r border-border">
+            <div className="relative w-full md:w-[45%] h-44 sm:h-56 md:h-full shrink-0 min-h-0 bg-muted/20 border-b md:border-b-0 md:border-r border-border overflow-hidden">
               {mainImage ? (
                 <Image
                   src={mainImage.src}
                   alt={mainImage.alt[locale] || name}
                   fill
                   className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
+                  sizes="(max-width: 768px) 100vw, 45vw"
                   priority
                 />
               ) : (
@@ -127,7 +132,7 @@ export function QuickViewModal() {
               )}
 
               {/* Status Badges Overlay */}
-              <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 z-10">
+              <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 z-20">
                 {product.newArrival && (
                   <Badge variant="secondary">
                     {locale === 'bn' ? 'নতুন' : 'New'}
@@ -152,11 +157,11 @@ export function QuickViewModal() {
             </div>
 
             {/* Right Column: Product Details & Purchase Actions */}
-            <div className="p-5 sm:p-6 md:w-1/2 flex flex-col justify-between overflow-y-auto space-y-4">
-              <div className="space-y-3">
+            <div className="w-full md:w-[55%] h-full min-h-0 flex flex-col justify-between overflow-y-auto p-4 sm:p-6 space-y-4">
+              <div className="space-y-3 pr-8 md:pr-6">
                 {/* Title & Price */}
                 <div className="space-y-1">
-                  <h3 className="font-serif font-bold text-xl sm:text-2xl text-foreground leading-tight">
+                  <h3 className="font-serif font-bold text-lg sm:text-2xl text-foreground leading-tight">
                     {name}
                   </h3>
                   <div className="pt-1">
@@ -170,26 +175,26 @@ export function QuickViewModal() {
                 </div>
 
                 {/* Short Description */}
-                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-3">
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
                   {shortDesc}
                 </p>
 
                 {/* Attributes Table */}
                 <div className="pt-2 border-t border-border/60 text-xs space-y-1.5">
                   {product.attributes.material && (
-                    <div className="flex justify-between py-0.5 border-b border-border/40">
+                    <div className="flex justify-between py-1 border-b border-border/40">
                       <span className="text-muted-foreground font-medium">{tProduct('material')}</span>
                       <span className="font-semibold text-foreground">{product.attributes.material[locale] || product.attributes.material.bn}</span>
                     </div>
                   )}
                   {product.attributes.fabric && (
-                    <div className="flex justify-between py-0.5 border-b border-border/40">
+                    <div className="flex justify-between py-1 border-b border-border/40">
                       <span className="text-muted-foreground font-medium">{tProduct('fabric')}</span>
                       <span className="font-semibold text-foreground">{product.attributes.fabric[locale] || product.attributes.fabric.bn}</span>
                     </div>
                   )}
                   {product.attributes.occasion && (
-                    <div className="flex justify-between py-0.5">
+                    <div className="flex justify-between py-1">
                       <span className="text-muted-foreground font-medium">{tProduct('occasion')}</span>
                       <span className="font-semibold text-foreground">{product.attributes.occasion[locale] || product.attributes.occasion.bn}</span>
                     </div>
@@ -198,8 +203,8 @@ export function QuickViewModal() {
               </div>
 
               {/* Purchase Actions & Controls */}
-              <div className="pt-3 border-t border-border space-y-3">
-                {/* Quantity Stepper & Availability */}
+              <div className="pt-3 border-t border-border space-y-3 shrink-0">
+                {/* Quantity Stepper & Wishlist */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="text-xs font-semibold text-foreground">{t('quantity')}:</span>
@@ -209,6 +214,7 @@ export function QuickViewModal() {
                         onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
                         disabled={!canPurchase || quantity <= 1}
                         className="p-1.5 text-muted-foreground hover:text-foreground disabled:opacity-40 transition-colors cursor-pointer"
+                        aria-label="Decrease quantity"
                       >
                         <Minus className="w-3.5 h-3.5" />
                       </button>
@@ -220,6 +226,7 @@ export function QuickViewModal() {
                         onClick={() => setQuantity((prev) => Math.min(10, prev + 1))}
                         disabled={!canPurchase || quantity >= 10}
                         className="p-1.5 text-muted-foreground hover:text-foreground disabled:opacity-40 transition-colors cursor-pointer"
+                        aria-label="Increase quantity"
                       >
                         <Plus className="w-3.5 h-3.5" />
                       </button>
@@ -244,7 +251,7 @@ export function QuickViewModal() {
 
                   <Link
                     href={`/shop/${product.slug}`}
-                    onClick={closeQuickView}
+                    onClick={handleClose}
                     className="block w-full"
                   >
                     <Button

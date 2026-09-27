@@ -56,7 +56,7 @@ export function CartDrawer() {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex justify-end font-sans">
+        <div className="font-sans">
           {/* Backdrop Overlay */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -64,11 +64,11 @@ export function CartDrawer() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={closeDrawer}
-            className="fixed inset-0 bg-black/60 backdrop-blur-xs"
+            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-xs"
             aria-hidden="true"
           />
 
-          {/* Drawer Container */}
+          {/* Fixed Full-Height Right Drawer Container */}
           <motion.div
             role="dialog"
             aria-modal="true"
@@ -76,11 +76,11 @@ export function CartDrawer() {
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
-            transition={{ type: 'spring', damping: 25, stiffness: 250 }}
-            className="relative w-full max-w-md bg-card h-full shadow-2xl flex flex-col border-l border-border z-10 overflow-hidden"
+            transition={{ type: 'spring', damping: 28, stiffness: 300 }}
+            className="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-card h-full max-h-dvh shadow-2xl flex flex-col border-l border-border overflow-hidden"
           >
-            {/* Drawer Header */}
-            <div className="p-4 sm:p-5 border-b border-border flex items-center justify-between bg-muted/20">
+            {/* Drawer Header (Fixed Height / Shrink-0) */}
+            <div className="p-4 sm:p-5 border-b border-border flex items-center justify-between bg-muted/30 shrink-0">
               <div className="flex items-center gap-2.5">
                 <div className="p-2 rounded-full bg-primary/10 text-primary">
                   <ShoppingBag className="w-5 h-5" />
@@ -105,11 +105,11 @@ export function CartDrawer() {
               </button>
             </div>
 
-            {/* Drawer Body */}
-            <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4 divide-y divide-border/50">
+            {/* Drawer Body (Flex-1 / Scrollable) */}
+            <div className="flex-1 min-h-0 overflow-y-auto p-4 sm:p-5 space-y-4 divide-y divide-border/50 bg-card">
               {!isHydrated || isLoading ? (
-                <div className="py-12 text-center text-sm text-muted-foreground">
-                  Loading cart items...
+                <div className="py-16 text-center text-sm text-muted-foreground">
+                  {locale === 'bn' ? 'কার্ট লোড হচ্ছে...' : 'Loading shopping cart...'}
                 </div>
               ) : items.length === 0 ? (
                 <div className="py-16 text-center space-y-4">
@@ -225,9 +225,9 @@ export function CartDrawer() {
               )}
             </div>
 
-            {/* Drawer Footer */}
+            {/* Drawer Footer (Fixed at Bottom / Shrink-0) */}
             {isHydrated && items.length > 0 && (
-              <div className="p-4 sm:p-5 border-t border-border bg-card space-y-3">
+              <div className="p-4 sm:p-5 border-t border-border bg-card space-y-3 shrink-0">
                 <div className="flex items-center justify-between font-serif">
                   <span className="text-sm font-semibold text-muted-foreground">
                     {t('subtotal')}
