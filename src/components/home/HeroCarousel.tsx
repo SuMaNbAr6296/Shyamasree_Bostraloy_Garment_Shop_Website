@@ -19,7 +19,7 @@ const slides: Slide[] = [
   { id: 'slide-4', src: '/assets/hero/hero-04.png', alt: 'Boutique Textile Showcase' },
 ];
 
-export function HeroCarousel() {
+export function HeroCarousel({ children }: { children?: React.ReactNode }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
@@ -35,13 +35,13 @@ export function HeroCarousel() {
     if (isPaused) return;
     const timer = setInterval(() => {
       nextSlide();
-    }, 6000);
+    }, 2500);
     return () => clearInterval(timer);
   }, [isPaused, nextSlide]);
 
   return (
     <div
-      className="relative w-full aspect-16/9 sm:aspect-21/9 lg:aspect-24/9 overflow-hidden rounded-lg border border-border shadow-md bg-muted/40 group"
+      className="relative w-full aspect-[4/3] sm:aspect-[16/9] overflow-hidden rounded-lg border border-border shadow-md bg-muted/40 group"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       aria-label="Hero Image Carousel"
@@ -61,8 +61,8 @@ export function HeroCarousel() {
             alt={slides[currentIndex].alt}
             fill
             priority={currentIndex === 0}
-            className="object-cover object-center"
-            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 90vw, 1200px"
+            className="object-cover object-top"
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 100vw, 100vw"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20" />
         </motion.div>
@@ -90,8 +90,7 @@ export function HeroCarousel() {
         </IconButton>
       </div>
 
-      {/* Indicators */}
-      <div className="absolute bottom-3 left-0 right-0 flex items-center justify-center gap-2 pointer-events-auto">
+      <div className="absolute bottom-6 sm:bottom-8 left-0 right-0 flex items-center justify-center gap-2 pointer-events-auto">
         {slides.map((_, idx) => (
           <button
             key={idx}
@@ -99,11 +98,20 @@ export function HeroCarousel() {
             onClick={() => setCurrentIndex(idx)}
             aria-label={`Go to slide ${idx + 1}`}
             className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-              currentIndex === idx ? 'w-6 bg-secondary' : 'w-2 bg-white/60 hover:bg-white'
+              currentIndex === idx ? 'w-6 bg-primary' : 'w-2 bg-white/60 hover:bg-white'
             }`}
           />
         ))}
       </div>
+
+      {/* Children overlay (Buttons) */}
+      {children && (
+        <div className="hidden sm:flex absolute inset-0 flex-col items-center justify-end pb-12 sm:pb-16 pointer-events-none z-10">
+          <div className="pointer-events-auto">
+            {children}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
