@@ -17,7 +17,7 @@ export function Breadcrumb({ items, className }: BreadcrumbProps) {
   const tNav = useTranslations('navigation');
 
   return (
-    <nav aria-label="Breadcrumb" className={cn('flex items-center gap-1.5 text-xs font-sans text-muted-foreground', className)}>
+    <nav aria-label="Breadcrumb" className={cn('flex flex-wrap items-center gap-1.5 text-xs font-sans text-muted-foreground', className)}>
       <Link href="/" className="hover:text-primary transition-colors">
         {tNav('home')}
       </Link>

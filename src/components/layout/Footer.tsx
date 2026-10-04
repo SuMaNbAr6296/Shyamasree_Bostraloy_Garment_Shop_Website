@@ -21,7 +21,7 @@ export function Footer() {
   ] as const;
 
   return (
-    <footer aria-label="Site Footer" className="bg-card border-t-2 border-primary/30 text-foreground font-sans pt-12 sm:pt-16 pb-8">
+    <footer aria-label="Site Footer" className="bg-card border-t-2 border-primary/30 text-foreground font-sans pt-12 sm:pt-16 pb-28 sm:pb-8">
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 pb-12">
           {/* Brand Info */}
@@ -70,7 +70,7 @@ export function Footer() {
           </div>
 
           {/* Contact Details */}
-          <div className="space-y-4">
+          <div className="space-y-4 md:col-span-2 lg:col-span-1">
             <h3 className="font-serif font-bold text-base text-foreground border-b border-secondary/30 pb-2 inline-block">
               {tFooter('contactTitle')}
             </h3>

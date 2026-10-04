@@ -42,6 +42,7 @@ export function HeaderActions() {
           size="md"
           onClick={openSearch}
           aria-label={tNav('search')}
+          className="hidden sm:inline-flex"
         >
           <Search className="w-5 h-5 text-foreground/80 hover:text-primary transition-colors" />
         </IconButton>
@@ -52,7 +53,7 @@ export function HeaderActions() {
         </div>
 
         {/* Wishlist Trigger */}
-        <Link href="/wishlist" className="relative" aria-label={tNav('wishlist')}>
+        <Link href="/wishlist" className="relative hidden sm:inline-flex" aria-label={tNav('wishlist')}>
           <IconButton variant="ghost" size="md" aria-label={tNav('wishlist')}>
             <Heart className="w-5 h-5 text-foreground/80 hover:text-primary transition-colors" />
           </IconButton>

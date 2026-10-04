@@ -24,19 +24,23 @@ export async function ShopToolbar({
       </div>
 
       {/* Action Controls */}
-      <div className="flex items-center justify-between md:justify-end gap-3 w-full md:w-auto">
-        {/* Mobile Filter Trigger */}
-        <MobileFilterDrawer activeFilterCount={activeFilterCount}>
-          {filterSidebarNode}
-        </MobileFilterDrawer>
+      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between md:justify-end gap-3 w-full md:w-auto">
+        <div className="flex items-center justify-between gap-3 w-full md:w-auto">
+          {/* Mobile Filter Trigger */}
+          <MobileFilterDrawer activeFilterCount={activeFilterCount}>
+            {filterSidebarNode}
+          </MobileFilterDrawer>
+
+          {/* Sort Select */}
+          <SortSelect />
+        </div>
 
         {/* Results Counter */}
-        <span className="text-xs text-muted-foreground font-medium shrink-0">
-          {t('resultCount', { count: totalCount })}
-        </span>
-
-        {/* Sort Select */}
-        <SortSelect />
+        <div className="flex items-center justify-center md:justify-start">
+          <span className="text-xs text-muted-foreground font-medium shrink-0">
+            {t('resultCount', { count: totalCount })}
+          </span>
+        </div>
       </div>
     </div>
   );

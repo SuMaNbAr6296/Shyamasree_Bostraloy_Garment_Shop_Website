@@ -21,7 +21,7 @@ export async function CollectionShowcase() {
       title={t('collectionsTitle')}
       className="bg-background border-b border-border"
     >
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
         {collections.map((col) => {
           const name = col.name[locale] || col.name.bn;
           const desc = col.description[locale] || col.description.bn;

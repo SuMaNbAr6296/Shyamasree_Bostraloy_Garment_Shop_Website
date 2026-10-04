@@ -24,7 +24,7 @@ export function DesktopNavigation({ className }: { className?: string }) {
   };
 
   return (
-    <nav aria-label="Main Navigation" className={cn('hidden md:flex items-center gap-6 lg:gap-8', className)}>
+    <nav aria-label="Main Navigation" className={cn('hidden lg:flex items-center gap-6 xl:gap-8', className)}>
       {navItems.map((item) => {
         const active = isActive(item.href);
         return (

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Noto_Serif_Bengali, Hind_Siliguri } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
@@ -7,6 +7,12 @@ import { routing } from "@/i18n/routing";
 import { Locale } from "@/config/i18n";
 import { StorefrontShell } from "@/components/layout/StorefrontShell";
 import "../globals.css";
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1, // Prevents iOS Safari from zooming in when tapping inputs
+};
 
 const hindSiliguri = Hind_Siliguri({
   weight: ["400", "500", "600", "700"],

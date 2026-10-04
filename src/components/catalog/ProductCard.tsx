@@ -56,7 +56,7 @@ export function ProductCard({ product, className, priority = false }: ProductCar
         </Link>
 
         {/* Badges */}
-        <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 z-10 pointer-events-none">
+        <div className="absolute top-3 left-3 flex flex-col items-start gap-1.5 z-10 pointer-events-none">
           {product.newArrival && (
             <Badge variant="secondary">
               {locale === 'bn' ? 'নতুন' : 'New'}
@@ -107,7 +107,7 @@ export function ProductCard({ product, className, priority = false }: ProductCar
         </div>
 
         {/* Price & Action Footer */}
-        <div className="pt-2 border-t border-border/60 flex items-center justify-between">
+        <div className="pt-2 border-t border-border/60 flex items-center justify-between pr-12 sm:pr-0">
           <PriceDisplay
             price={product.price}
             compareAtPrice={product.compareAtPrice}

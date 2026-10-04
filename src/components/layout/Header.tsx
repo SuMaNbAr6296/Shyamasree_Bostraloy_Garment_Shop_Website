@@ -15,24 +15,24 @@ export function Header() {
         {/* Brand & Logo */}
         <Link
           href="/"
-          className="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-xs"
+          className="flex items-center gap-2 sm:gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-xs overflow-hidden"
           aria-label={tCommon('brandName')}
         >
-          <div className="relative w-12 h-12 sm:w-16 sm:h-16 shrink-0 overflow-hidden rounded-md border border-secondary/30 bg-muted/20 shadow-sm">
+          <div className="relative w-10 h-10 sm:w-16 sm:h-16 shrink-0 overflow-hidden rounded-md border border-secondary/30 bg-muted/20 shadow-sm">
             <Image
               src={siteConfig.assets.logo}
               alt={tCommon('brandName')}
               fill
               className="object-contain p-1 group-hover:scale-105 transition-transform duration-200"
-              sizes="(max-width: 640px) 48px, 64px"
+              sizes="(max-width: 640px) 40px, 64px"
               priority
             />
           </div>
-          <div className="flex flex-col">
-            <span className="font-serif text-xl sm:text-2xl font-extrabold tracking-tight text-foreground group-hover:text-primary transition-colors leading-tight">
+          <div className="flex flex-col min-w-0">
+            <span className="font-serif text-[17px] sm:text-xl lg:text-2xl font-extrabold tracking-tight text-foreground group-hover:text-primary transition-colors leading-tight truncate">
               {tCommon('brandName')}
             </span>
-            <span className="font-sans text-xs sm:text-sm font-medium text-muted-foreground hidden sm:block">
+            <span className="font-sans text-[10px] sm:text-xs lg:text-sm font-medium text-muted-foreground hidden sm:block truncate">
               {tCommon('brandTagline')}
             </span>
           </div>

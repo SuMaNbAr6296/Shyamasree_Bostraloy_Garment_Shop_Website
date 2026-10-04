@@ -25,7 +25,7 @@ function SortSelectContent() {
     <div className="flex items-center gap-2 font-sans text-xs sm:text-sm">
       <label htmlFor="sort-select" className="text-muted-foreground shrink-0 flex items-center gap-1.5 font-medium">
         <ArrowUpDown className="w-3.5 h-3.5 text-primary" />
-        <span>{t('sortLabel')}</span>
+        <span className="hidden sm:inline">{t('sortLabel')}</span>
       </label>
       <select
         id="sort-select"
