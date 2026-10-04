@@ -23,20 +23,20 @@ export function Footer() {
   return (
     <footer aria-label="Site Footer" className="bg-card border-t-2 border-primary/30 text-foreground font-sans pt-12 sm:pt-16 pb-8">
       <Container>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 pb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 pb-12">
           {/* Brand Info */}
           <div className="space-y-4">
-            <Link href="/" className="inline-flex items-center gap-3">
-              <div className="relative w-10 h-10 overflow-hidden rounded-sm border border-secondary/40">
+            <Link href="/" className="inline-flex items-center gap-4 group">
+              <div className="relative w-20 h-20 sm:w-24 sm:h-24 shrink-0 overflow-hidden rounded-lg bg-transparent">
                 <Image
                   src={siteConfig.assets.logo}
                   alt={tCommon('brandName')}
                   fill
-                  className="object-contain"
-                  sizes="40px"
+                  className="object-contain group-hover:scale-105 transition-transform duration-300"
+                  sizes="(max-width: 640px) 80px, 96px"
                 />
               </div>
-              <span className="font-serif font-bold text-xl text-primary">
+              <span className="font-serif font-extrabold text-2xl sm:text-3xl text-primary group-hover:text-primary/80 transition-colors drop-shadow-sm leading-tight">
                 {tCommon('brandName')}
               </span>
             </Link>
@@ -49,26 +49,28 @@ export function Footer() {
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-4">
-            <h3 className="font-serif font-bold text-base text-foreground border-b border-secondary/30 pb-2 inline-block">
-              {tFooter('quickLinks')}
-            </h3>
-            <ul className="space-y-2 text-xs sm:text-sm">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-muted-foreground hover:text-primary transition-colors inline-block py-0.5"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          <div className="flex flex-col md:items-center">
+            <div className="space-y-4 w-full md:w-auto">
+              <h3 className="font-serif font-bold text-base text-foreground border-b border-secondary/30 pb-2 inline-block w-max">
+                {tFooter('quickLinks')}
+              </h3>
+              <ul className="space-y-2 text-xs sm:text-sm">
+                {navLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-muted-foreground hover:text-primary transition-colors inline-block py-0.5"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
           {/* Contact Details */}
-          <div className="space-y-4 lg:col-span-2">
+          <div className="space-y-4">
             <h3 className="font-serif font-bold text-base text-foreground border-b border-secondary/30 pb-2 inline-block">
               {tFooter('contactTitle')}
             </h3>
