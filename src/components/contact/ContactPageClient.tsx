@@ -62,11 +62,9 @@ export function ContactPageClient() {
   };
 
   const mapEmbedUrl =
-    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14732.14631627918!2d87.52554!3d22.61541!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a0279d46bfbb957%3A0x2ffad1b87b7a5a87!2sDingal%2C%20West%20Bengal%20721232!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin';
+    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3683.7540203525!2d87.594555!3d22.649185!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f801179a95d951%3A0x31c61cfff0231719!2sShyamasree%20Bostraloy!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin';
 
-  const mapDirectUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-    'Shyamasree Bostraloy Opposite Dingal Post Office Dingal Hattala Paschim Medinipur West Bengal 721232'
-  )}`;
+  const mapDirectUrl = 'https://maps.app.goo.gl/Fdtbp1941trwyhYs6';
 
   return (
     <div className="space-y-12 sm:space-y-16 pb-12 bg-background font-sans">

@@ -4,7 +4,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { siteConfig } from '@/config/site';
 import { Container } from '@/components/ui/Container';
 import { Divider } from '@/components/ui/Divider';
-import { MapPin, Phone, Globe } from 'lucide-react';
+import { MapPin, Phone, Globe, Store, Map } from 'lucide-react';
 
 export function Footer() {
   const tFooter = useTranslations('footer');
@@ -97,6 +97,28 @@ export function Footer() {
                   {siteConfig.url.replace('https://', '')}
                 </a>
               </div>
+              <div className="flex items-center gap-2.5">
+                <Store className="w-4 h-4 text-primary shrink-0" />
+                <a
+                  href="https://share.google/pnl0uLFKEjtwnCHfz"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-primary transition-colors text-xs font-bold"
+                >
+                  {tFooter('gmbProfile')}
+                </a>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <Map className="w-4 h-4 text-primary shrink-0" />
+                <a
+                  href="https://maps.app.goo.gl/Fdtbp1941trwyhYs6"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-primary transition-colors text-xs font-bold"
+                >
+                  {tFooter('mapLocation')}
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -105,7 +127,17 @@ export function Footer() {
 
         {/* Bottom copyright */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-muted-foreground gap-4 text-center sm:text-left">
-          <p>© {new Date().getFullYear()} {tCommon('brandName')}. {tFooter('rights')}.</p>
+          <p>
+            © {new Date().getFullYear()} {tCommon('brandName')}. {tFooter('rights')}{' '}
+            <a 
+              href="https://www.sumanbar.online" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="font-bold hover:text-primary transition-colors"
+            >
+              {tFooter('developerName')}
+            </a>
+          </p>
           <p className="text-[11px]">{tCommon('brandTagline')} — Paschim Medinipur</p>
         </div>
       </Container>

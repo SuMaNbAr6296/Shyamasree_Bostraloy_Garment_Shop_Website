@@ -32,6 +32,7 @@ function LanguageSwitcherContent({ className }: LanguageSwitcherProps) {
     <div
       role="group"
       aria-label="Language selection"
+      suppressHydrationWarning
       className={cn(
         'inline-flex items-center rounded-sm border border-border bg-card p-0.5 shadow-xs font-sans text-xs select-none',
         isPending && 'opacity-70 pointer-events-none',
@@ -40,6 +41,7 @@ function LanguageSwitcherContent({ className }: LanguageSwitcherProps) {
     >
       <button
         type="button"
+        suppressHydrationWarning
         onClick={() => handleSwitch('bn')}
         disabled={isPending}
         className={cn(
@@ -58,6 +60,7 @@ function LanguageSwitcherContent({ className }: LanguageSwitcherProps) {
 
       <button
         type="button"
+        suppressHydrationWarning
         onClick={() => handleSwitch('en')}
         disabled={isPending}
         className={cn(

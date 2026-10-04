@@ -5,6 +5,7 @@ import { Footer } from './Footer';
 import { CartDrawer } from '@/components/cart/CartDrawer';
 import { SearchOverlay } from '@/components/search/SearchOverlay';
 import { QuickViewModal } from '@/components/catalog/QuickViewModal';
+import { FloatingContact } from './FloatingContact';
 
 interface StorefrontShellProps {
   children: React.ReactNode;
@@ -21,6 +22,7 @@ export function StorefrontShell({ children }: StorefrontShellProps) {
       <CartDrawer />
       <SearchOverlay />
       <QuickViewModal />
+      <FloatingContact />
     </div>
   );
 }

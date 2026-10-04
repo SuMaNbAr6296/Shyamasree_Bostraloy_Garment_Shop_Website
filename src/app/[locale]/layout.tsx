@@ -16,7 +16,6 @@ const hindSiliguri = Hind_Siliguri({
 });
 
 const notoSerifBengali = Noto_Serif_Bengali({
-  weight: ["500", "600", "700"],
   subsets: ["bengali", "latin"],
   variable: "--font-noto-serif-bengali",
   display: "swap",
