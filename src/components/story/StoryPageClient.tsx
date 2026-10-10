@@ -67,7 +67,7 @@ export function StoryPageClient() {
   ];
 
   return (
-    <div className="space-y-12 sm:space-y-16 pb-12 bg-background">
+    <div className="pb-12 bg-background flex flex-col gap-4 sm:gap-8">
       {/* Hero Banner Header */}
       <section className="relative bg-muted/40 border-b border-border overflow-hidden py-12 sm:py-20">
         <Container className="relative z-10 space-y-6 max-w-4xl text-center">
@@ -109,81 +109,73 @@ export function StoryPageClient() {
       </section>
 
       {/* Editorial History Section (Image + Story Text) */}
-      <Section size="md">
-        <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            {/* Image Column (5 cols) */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="lg:col-span-5 relative aspect-4/3 sm:aspect-16/10 lg:aspect-4/5 rounded-md overflow-hidden border border-secondary/30 shadow-lg group bg-muted"
-            >
-              <Image
-                src="/assets/banners/banner.png"
-                alt={siteConfig.name[locale]}
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-                sizes="(max-width: 1024px) 100vw, 40vw"
-                priority
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
-              <div className="absolute bottom-4 left-4 right-4 text-white p-2">
-                <p className="font-serif text-sm font-bold">
-                  {siteConfig.name[locale]}
-                </p>
-                <p className="text-xs font-sans text-white/80">
-                  {locale === 'bn' ? 'ডিঙ্গাল পোস্ট অফিসের বিপরীতে, ডিঙ্গাল হাটতলা' : 'Opposite Dingal Post Office, Paschim Medinipur'}
-                </p>
-              </div>
-            </motion.div>
+      <Section size="sm">
+        <Container className="space-y-10">
+          {/* Header section on top */}
+          <div className="text-center max-w-3xl mx-auto space-y-3">
+            <span className="text-xs font-bold uppercase tracking-wider text-secondary">
+              {locale === 'bn' ? 'আমাদের ইতিহাস' : 'Our Legacy'}
+            </span>
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
+              {t('historyTitle')}
+            </h2>
+          </div>
 
-            {/* Content Column (7 cols) */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="lg:col-span-7 space-y-6 font-sans"
-            >
-              <div className="space-y-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-secondary">
-                  {locale === 'bn' ? 'আমাদের ইতিহাস' : 'Our Legacy'}
-                </span>
-                <h2 className="font-serif text-2xl sm:text-4xl font-bold text-foreground leading-tight">
-                  {t('historyTitle')}
-                </h2>
-              </div>
+          {/* Banner Image - Full Width & Responsive */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="w-full rounded-md overflow-hidden border border-secondary/30 shadow-lg bg-card"
+          >
+            <Image
+              src="/assets/banners/Banner2.webp"
+              alt={siteConfig.name[locale]}
+              width={1200}
+              height={600}
+              sizes="100vw"
+              priority
+              className="w-full h-auto object-contain"
+            />
+          </motion.div>
 
+          {/* Content under the Banner */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="max-w-4xl mx-auto space-y-8 font-sans"
+          >
+            <div className="space-y-6 sm:columns-2 gap-8 text-center sm:text-left">
               <p className="text-base text-muted-foreground leading-relaxed">
                 {t('historyText1')}
               </p>
-
-              <p className="text-base text-muted-foreground leading-relaxed">
+              <p className="text-base text-muted-foreground leading-relaxed break-inside-avoid">
                 {t('historyText2')}
               </p>
+            </div>
 
-              <div className="pt-4 grid grid-cols-2 gap-4 border-t border-border">
-                <div className="p-3 bg-muted/30 rounded-xs border border-border/50">
-                  <span className="font-serif font-bold text-lg text-primary block">
-                    {locale === 'bn' ? 'হস্তচালিত তাঁত শাড়ি' : 'Handloom Sarees'}
-                  </span>
-                  <span className="text-xs text-muted-foreground">
-                    {locale === 'bn' ? 'বালুচরী, কাতান, জামদানি ও চন্দেরী' : 'Baluchari, Katan Silk, Jamdani & Chanderi'}
-                  </span>
-                </div>
-                <div className="p-3 bg-muted/30 rounded-xs border border-border/50">
-                  <span className="font-serif font-bold text-lg text-secondary-hover block">
-                    {locale === 'bn' ? 'উৎসব ও বিবাহ পোশাক' : 'Festive & Bridal Wear'}
-                  </span>
-                  <span className="text-xs text-muted-foreground">
-                    {locale === 'bn' ? 'লেহেঙ্গা, ধুতি, থ্রি-পিস ও সুতি বসন' : 'Lehengas, Dhotis, Suits & Fine Textiles'}
-                  </span>
-                </div>
+            <div className="pt-8 grid grid-cols-1 sm:grid-cols-2 gap-6 border-t border-border">
+              <div className="p-6 bg-muted/30 rounded-md border border-border/50 text-center flex flex-col items-center justify-center">
+                <span className="font-serif font-bold text-xl text-primary block mb-2">
+                  {locale === 'bn' ? 'হস্তচালিত তাঁত শাড়ি' : 'Handloom Sarees'}
+                </span>
+                <span className="text-sm text-muted-foreground">
+                  {locale === 'bn' ? 'বালুচরী, কাতান, জামদানি ও চন্দেরী' : 'Baluchari, Katan Silk, Jamdani & Chanderi'}
+                </span>
               </div>
-            </motion.div>
-          </div>
+              <div className="p-6 bg-muted/30 rounded-md border border-border/50 text-center flex flex-col items-center justify-center">
+                <span className="font-serif font-bold text-xl text-secondary-hover block mb-2">
+                  {locale === 'bn' ? 'উৎসব ও বিবাহ পোশাক' : 'Festive & Bridal Wear'}
+                </span>
+                <span className="text-sm text-muted-foreground">
+                  {locale === 'bn' ? 'লেহেঙ্গা, ধুতি, থ্রি-পিস ও সুতি বসন' : 'Lehengas, Dhotis, Suits & Fine Textiles'}
+                </span>
+              </div>
+            </div>
+          </motion.div>
         </Container>
       </Section>
 
@@ -288,12 +280,13 @@ export function StoryPageClient() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-            <div className="relative aspect-4/3 sm:aspect-3/4 rounded-md overflow-hidden border border-border shadow-xs group bg-muted">
+            <div className="relative rounded-md overflow-hidden border border-border shadow-xs group bg-muted">
               <Image
-                src="/assets/hero/hero-01.png"
+                src="/assets/decorative/Luxe Katan Silk & Kanjivaram Collection.png"
                 alt="Traditional Silk Saree"
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                width={1254}
+                height={1254}
+                className="w-full h-auto transition-transform duration-500 group-hover:scale-105"
                 sizes="(max-width: 640px) 100vw, 33vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-80" />
@@ -307,12 +300,13 @@ export function StoryPageClient() {
               </div>
             </div>
 
-            <div className="relative aspect-4/3 sm:aspect-3/4 rounded-md overflow-hidden border border-border shadow-xs group bg-muted">
+            <div className="relative rounded-md overflow-hidden border border-border shadow-xs group bg-muted">
               <Image
-                src="/assets/hero/hero-02.png"
+                src="/assets/decorative/Baluchari & Dhakai Jamdani Elegance.png"
                 alt="Bengali Handloom Saree"
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                width={1254}
+                height={1254}
+                className="w-full h-auto transition-transform duration-500 group-hover:scale-105"
                 sizes="(max-width: 640px) 100vw, 33vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-80" />
@@ -326,12 +320,13 @@ export function StoryPageClient() {
               </div>
             </div>
 
-            <div className="relative aspect-4/3 sm:aspect-3/4 rounded-md overflow-hidden border border-border shadow-xs group bg-muted">
+            <div className="relative rounded-md overflow-hidden border border-border shadow-xs group bg-muted">
               <Image
-                src="/assets/hero/hero-03.png"
+                src="/assets/decorative/Designer Suits & Lehengas Showcase.png"
                 alt="Contemporary Attire"
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                width={1254}
+                height={1254}
+                className="w-full h-auto transition-transform duration-500 group-hover:scale-105"
                 sizes="(max-width: 640px) 100vw, 33vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-80" />

@@ -60,7 +60,7 @@ export function HeroCarousel({ children }: { children?: React.ReactNode }) {
             src={slides[currentIndex].src}
             alt={slides[currentIndex].alt}
             fill
-            priority={currentIndex === 0}
+            priority={true}
             className="object-cover object-top"
             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 100vw, 100vw"
           />
